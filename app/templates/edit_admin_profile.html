@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Edit Admin Profile{% endblock %}
+
+{% block page_content %}
+    <h1>编辑管理员资料</h1>
+
+    <form method='post' enctype=multipart/form-data>
+       {{ wtf.quick_form(form) }}
+    </form>
+
+
+
+{% endblock %}

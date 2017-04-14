@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <img class="photo-thumbnail" src="{{ user.real_avatar }}">
+        <div class="profile-header">
+        <h1>{{ user.username }}</h1>
+        {% if user.name or user.location %}
+            <p>
+            {% if user.name %}
+                姓名是：{{ user.name }}
+                <br>
+            {% endif %}
+            {% if user.location %}
+                来自： <a href="http://maps.google.com/?q={{ user.location }}">{{ user.location }}</a>
+            {% endif %}
+            </p>
+        {% endif %}
+
+        {% if user.about_me %}
+            <p>
+                个人简介：{{ user.about_me }}
+            </p>
+        {% endif %}
+        <p>
+            注册日期：{{ moment(user.member_since).format('L') }}
+            <br>
+            上次登录：{{ moment(user.last_seen).format('YYYY年M月D日， h:mm:ss a') }}
+        </p>
+
+        <h4>曾经发表过：</h4>
+        {% include '_pastArticle.html' %}
+
+        <p>
+            {% if current_user.is_authenticated %}
+                <a class="btn btn-default" href="{{ url_for('main.edit_admin_profile') }}">修改管理员资料</a>
+                {% elif user == current_user %}
+                <a class="btn btn-default" href="{{ url_for('main.edit_profile') }}">修改资料</a>
+            {% endif %}
+        </p>
+        </div>
+
+    </div>
+{% endblock %}
